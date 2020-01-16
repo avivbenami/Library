@@ -43,11 +43,12 @@ namespace School_Books
                     connection.Open();
                     DataTable dt = new DataTable();
                     dt = connection.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+
                     string[] excelSheets = new String[dt.Rows.Count];
                     int i = 0;
                     foreach (DataRow dataRow in dt.Rows)
                     {
-                        excelSheets[i] = dataRow["TABLE_NAME"].ToString().Trim('\'', '$');
+                        excelSheets[i] = dataRow["TABLE_NAME"].ToString().Trim('\'', '$').Replace("''", "'");
                         i++;
                     }
                     return excelSheets;
