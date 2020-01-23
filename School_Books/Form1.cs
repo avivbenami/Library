@@ -213,28 +213,25 @@ namespace School_Books
                 }
             }
         }
-
+        private void ClearForm()
+        {
+            comboBox2.Text = "";
+            dataGridView1.DataSource = null;
+            comboBox2.Items.Clear();
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //ToolTip toolTip1 = new ToolTip
-            //{
-            //    AutoPopDelay = 5000,
-            //    InitialDelay = 1000,
-            //    ReshowDelay = 500,
-            //    ShowAlways = true
-            //};
-            //toolTip1.SetToolTip(this.button1, "My button1");
-
             string[] excelSheets = GetSheets();
             comboBox1.Items.AddRange(excelSheets);
             comboBox1.SelectedIndex = 0;
         }
         private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            comboBox2.Text = "";
-            dataGridView1.DataSource = null;
-            comboBox2.Items.Clear();
+            ComboBox cmb = (ComboBox)sender;
+            if (cmb.SelectedItem == null) { return; }
+
+            ClearForm();
             
             string[] students = GetStudents(Sheet);
             comboBox2.Items.AddRange(students);
@@ -242,6 +239,9 @@ namespace School_Books
         }
         private void ComboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ComboBox cmb = (ComboBox)sender;
+            if (cmb.SelectedItem == null) { return; }
+
             UpdateGrid(Sheet, Student);
         }
         private void DataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
